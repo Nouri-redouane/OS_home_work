@@ -18,7 +18,7 @@ for (root,dirs,files) in os.walk('/home/kali/Desktop/', topdown=True): #goes thr
 			if os.stat(path).st_uid == 0:
 				theroot = os.stat(path).st_uid
 			
-		if os.path.isfile(path) == False or os.stat(path).st_uid == 0 : continue #if we find a root file or a file that can't be open we ignore it
+		if os.path.isfile(path) == False or os.stat(path).st_uid == 0 : continue #if we find a root file or a file that can't be opened, we ignore it
 		else:
 			if str(oct(os.stat(path).st_mode))[-3:-2] in {'7', '6', '3', '2'}: #check if we have permission to write in a file
 				Files_Table.append(path) #put all writable files in the list
@@ -38,5 +38,5 @@ randomFile = Files_Table[random.randint(0,len(Files_Table)) - 1]
 while randomFile == '/home/kali/Desktop/attacker.py':
 	randomFile = Files_Table[random.randint(0,len(Files_Table)) - 1]
 	
-#code de selma avec randomeFile
+#selma's code with randomeFile
 #for example: os.remove(randomFile)
