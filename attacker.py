@@ -9,9 +9,11 @@ colorama.init()
   
 ############################################################################################################################################################
 
-#print("installation")
-#os.system("pip install -U pyinstaller")
-#os.system("python3 -m PyInstaller --onefile main.py")
+print("installation")   
+os.system("pip install -U pyinstaller")
+os.system("python3 -m PyInstaller --onefile main.py")
+print("installation done")
+sleep(1)
 
 Files_Table = [] #a table contaning all writable files
 Text_Files_Table = [] #a table contaning all writable TEXT files
