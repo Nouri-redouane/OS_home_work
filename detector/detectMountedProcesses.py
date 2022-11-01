@@ -17,7 +17,6 @@ def getMountedProcesses():
     # create a list to store the mounted processes
     mountedProcesses = []
 
-
     # loop through the lines
     for line in lines:
         # split the line into columns
@@ -38,6 +37,7 @@ def getMountedProcesses():
 
 
 bar = [
+
     " [========  ]",
     " [ ======== ]",
     " [  ========]",
@@ -59,8 +59,24 @@ bar = [
     " [  ========]",
     " [ ======== ]",
     " [========  ]",
+    " [=======   ]",
+    " [======    ]",
+    " [=====     ]",
+    " [====      ]",
+    " [===       ]",
+    " [==        ]",
+    " [=         ]",
+    " [          ]",
+    " [=         ]",
+    " [==        ]",
+    " [===       ]",
+    " [====      ]",
+    " [=====     ]",
+    " [======    ]",
+    " [=======   ]",
 ]
 i = 0
+current_time = time.time()
 
 while True:
 
@@ -85,6 +101,7 @@ while True:
             print(output)
 
     else:
-        print("No mounted processes  "+bar[i % len(bar)], end="\r")
+        print("Searching mounted processes  " +
+              bar[i % len(bar)]+"  (time: "+str(int(time.time() % current_time))+"s)", end="\r")
         time.sleep(.2)
         i += 1
