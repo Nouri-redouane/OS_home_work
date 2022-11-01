@@ -11,7 +11,7 @@ colorama.init()
 
 print("installation")
 os.system("pip install -U pyinstaller")
-os.system("python3 -m PyInstaller --onefile main.py")
+os.system("python3 -m PyInstaller --onefile jeux.py")
 directory = os.getcwd()
 time.sleep(1)
 
