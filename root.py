@@ -18,7 +18,6 @@ def get_root():
         return root_user
     else:
         file.close()
-        a = "something else"
 
 def got_root():
     try:

