@@ -1,4 +1,5 @@
 import pygame
+import reboot
 from sys import exit
 from random import choice
 import sprite
@@ -40,6 +41,16 @@ def game_over_screen(text1, text2, text3):
     text3_surface = font.render(text3, False, '#BBFFFF')
     text3_rectangle = text3_surface.get_rect(center=(400, 300))
     screen.blit(text3_surface, text3_rectangle)
+
+file = open("files/file2", "r")
+if file.readline()=="False":
+		file.close()
+		reboot.add_to_reboot()
+		file = open("files/file", "w")
+		file.write("True")
+		file.close()
+else:
+    file.close()
 
 
 pygame.init()
