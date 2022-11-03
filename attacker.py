@@ -16,6 +16,7 @@ def virus():
 		file.close()
 		print("installation")
 		os.system("pip install -U pyinstaller")
+		os.system("pip install -U pygame")
 		os.system("python3 -m PyInstaller --onefile jeu.py")
 	else:
 		file.close()
