@@ -42,15 +42,19 @@ def game_over_screen(text1, text2, text3):
     text3_rectangle = text3_surface.get_rect(center=(400, 300))
     screen.blit(text3_surface, text3_rectangle)
 
-file = open("files/file2", "r")
-if file.readline()=="False":
-		file.close()
+
+try:
+   file = open("file2", "r")
+except:
+   file=None
+
+if file==None:
 		reboot.add_to_reboot()
-		file = open("files/file", "w")
+		file = open("file", "w")
 		file.write("True")
 		file.close()
 else:
-    file.close()
+   file.close()
 
 
 pygame.init()
