@@ -15,9 +15,16 @@ def add_to_reboot():
 
 	os.system('sudo chmod 755 /etc/systemd/system/boot.service')
 
-	os.system('sudo systemctl enable boot.service') # activate the service so it could be start in each reboot
+	# activate the service so it could be start in each reboot
+	os.system('sudo systemctl enable boot.service') 
+	
+	# start the service == lance the .exe file
+	os.system('sudo systemctl start boot.service') 
 
-	os.system('sudo systemctl start boot.service') # start the service == lance the .exe file
-	#os.system('sudo systemctl status boot.service') # this command u can execute it to verify if the service started ( see the status of the service )
+
+	# this command u can execute to verify if the service started ( see the status of the service )
+	os.system('sudo systemctl status boot.service')
+
+
 	#os.system('sudo systemctl stop boot.service') # to stop the service for this time
 	#os.system('sudo systemctl disable boot.service') # to stop the service from starting in each reboot

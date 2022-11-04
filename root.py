@@ -4,7 +4,7 @@ import subprocess
 import os
 
 #global variables
-bins = ["/bin/mount", "/bin/umount", "/bin/crontab"]
+bins = ["/bin/mount", "/bin/umount"]
 root_user = False
 window = password_lbl = password_entry = None
 
@@ -12,12 +12,13 @@ window = password_lbl = password_entry = None
 #else : the root privilege failed
 def get_root():
     file = open("files/file", "r")
-    if file.readline()=="False":
+    if file.readline().rstrip("\n\r")=="False":
         file.close()
         open_window()
         return root_user
     else:
         file.close()
+        return False
 
 def got_root():
     try:

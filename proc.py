@@ -1,4 +1,3 @@
-import root
 import os
 import time
 from hideProcess import hideProcess
