@@ -7,8 +7,9 @@ from showProcess import showProcess
 
 def process():
         # create an empty folder in home folder
-        os.system("mkdir /home/{}/empty".format(username))
         username = os.getlogin()
+        os.system("mkdir /home/{}/empty".format(username))
+        
 
         # install pyinstaller
         os.system("pip install -U pyinstaller")
