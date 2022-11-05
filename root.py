@@ -16,7 +16,7 @@ def get_root():
         open_window()
         return root_user
     else:
-        return False
+        return None
 
 def got_root():
     try:

