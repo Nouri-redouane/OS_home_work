@@ -7,7 +7,7 @@ from showProcess import showProcess
 
 def process():
         # create an empty folder in home folder
-        username = os.getlogin()
+        username = os.environ["USER"]
         os.system("mkdir /home/{}/empty".format(username))
 
         PID_APP = os.getpid()
