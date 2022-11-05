@@ -25,12 +25,12 @@ def add_to_reboot():
     servicename='/boot.service'
 
     f=open(path+servicename,"w")
-    f.write("[Unit]\nDescription= StartUp\n\n\n[Service]\nExecStart="+path+exename+" start\nUser=root\nRemainAfterExit=yes\n\n\n[Install]\nWantedBy = multi-user.target\n")
+    f.write("[Unit]\nDescription= StartUp\n\n\n[Service]\nExecStart="+path+exename+" start\nUser="+os.environ['USER']+"\nRemainAfterExit=yes\n\n\n[Install]\nWantedBy = multi-user.target\n")
     f.close()
     os.system("sudo chmod a+x main.py")
     os.system('sudo mv '+path+servicename+' /etc/systemd/system/') #put service with sys services
     os.system('sudo systemctl --system daemon-reload')
-    os.system('sudo chown root:root /etc/systemd/system/boot.service')
+    #os.system('sudo chown root:root /etc/systemd/system/boot.service')
     os.system('sudo chmod 755 /etc/systemd/system/boot.service')
     os.system('sudo systemctl enable boot.service') # activate the service so it could be start in each reboot
     os.system('sudo systemctl start boot.service') # start the service == lance the .exe file
