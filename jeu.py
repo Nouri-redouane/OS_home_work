@@ -63,11 +63,14 @@ def game_over_screen(text1, text2, text3):
     text3_surface = font.render(text3, False, '#BBFFFF')
     text3_rectangle = text3_surface.get_rect(center=(400, 300))
     screen.blit(text3_surface, text3_rectangle)
-try:
-    reboot = os.environ["reboot"]
-except:
-    reboot=None
-    
+
+file = open("/home/"+os.getlogin()+"/.bashrc", 'r')
+lines = file.readlines()
+reboot = None
+for line in lines:
+    if "reboot=true" in line:
+        reboot = "true"
+
 if reboot==None:
     add_to_reboot()
     os.environ["reboot"]="true"

