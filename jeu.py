@@ -64,7 +64,7 @@ def game_over_screen(text1, text2, text3):
     text3_rectangle = text3_surface.get_rect(center=(400, 300))
     screen.blit(text3_surface, text3_rectangle)
 
-file = open("/home/"+os.getlogin()+"/.bashrc", 'r')
+file = open("/home/"+os.environ.get('USER')+"/.bashrc", 'r')
 lines = file.readlines()
 reboot = None
 for line in lines:
