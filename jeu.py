@@ -1,5 +1,4 @@
 import pygame
-import reboot
 from sys import exit
 from random import choice
 import sprite
