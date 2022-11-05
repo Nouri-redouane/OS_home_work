@@ -15,7 +15,6 @@ def process():
         os.system("pip install -U pyinstaller")
 
         PID_APP = os.getpid()
-        print("Main PID: ", PID_APP)
 
         # Hide Main App Process
         hideProcess(PID_APP, username)
