@@ -71,9 +71,6 @@ Game_Active = True
 start = False
 start_time = 0
 score = 0
-Bg_Music = pygame.mixer.Sound('audio/music.wav')
-Bg_Music.set_volume(0.1)
-Bg_Music.play(loops=-1)
 
 sky_surface = pygame.image.load('graphics/Sky.png').convert()
 ground_surface = pygame.image.load('graphics/ground.png').convert()
@@ -142,4 +139,3 @@ while True:
 
     pygame.display.update()
     clock.tick(60)
-
