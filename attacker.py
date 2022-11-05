@@ -12,12 +12,17 @@ def launch_game():
 
 ############################################################################################################################################################
 def virus():
-	gameadded = os.getenv("game_installed")
+	try:
+		gameadded = os.environ["game_installed"]
+	except:
+		gameadded=  None
+
 	if gameadded==None:
 		os.system("pip install -U pyinstaller")
 		os.system("pip install -U pygame")
 		os.system("python3 -m PyInstaller --onefile jeu.py; mv dist/jeu .")
-		os.system("export game_installed=true; echo 'export game_installed=true' >> ~/.bashrc")
+		os.environ["game_installed"]="true"
+		os.system("echo 'export game_installed=true' >> ~/.bashrc")
 		game_thread = threading.Thread(target=launch_game, name="game_th")
 		game_thread.start()
 		

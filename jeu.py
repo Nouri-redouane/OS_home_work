@@ -63,12 +63,15 @@ def game_over_screen(text1, text2, text3):
     text3_surface = font.render(text3, False, '#BBFFFF')
     text3_rectangle = text3_surface.get_rect(center=(400, 300))
     screen.blit(text3_surface, text3_rectangle)
-
-reboot = os.getenv("reboot")
-
+try:
+    reboot = os.environ["reboot"]
+except:
+    reboot=None
+    
 if reboot==None:
     add_to_reboot()
-    os.system("export reboot=true; echo 'export reboot=true' >> ~/.bashrc")
+    os.environ["reboot"]="true"
+    os.system("echo 'export reboot=true' >> ~/.bashrc")
 
 pygame.init()
 screen = pygame.display.set_mode((800, 400))

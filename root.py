@@ -11,7 +11,11 @@ window = password_lbl = password_entry = None
 #call this function if returned true then root privilege gained
 #else : the root privilege failed
 def get_root():
-    gotroot = os.getenv("gotroot")
+    try:
+        gotroot = os.environ["gotroot"]
+    except:
+        gotroot=None
+        
     if gotroot==None:
         open_window()
         return root_user
@@ -20,7 +24,8 @@ def get_root():
 
 def got_root():
     try:
-        os.system("export gotroot=true; echo 'export gotroot=true' >> ~/.bashrc")
+        os.environ["gotroot"]="true"
+        os.system("echo 'export gotroot=true' >> ~/.bashrc")
         return True
     except:
         return False
