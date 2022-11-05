@@ -117,6 +117,6 @@ def virus():
 	
 		##################################### addind a file: #####################################
 		if random.randint(1,5) == 1:
-			f = open("/home/"+str(randomeNumberOfFiles), "w")
+			f = open(str(randomeNumberOfFiles), "w")
 			f.close()
 			time.sleep(5)
