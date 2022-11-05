@@ -3,6 +3,7 @@ from sys import exit
 from random import choice
 import sprite
 import os
+import sys
 
 
 def display_score():
@@ -56,7 +57,12 @@ def game_over_screen(text1, text2, text3):
     text3_rectangle = text3_surface.get_rect(center=(400, 300))
     screen.blit(text3_surface, text3_rectangle)
 
+if getattr(sys, 'frozen', False):
+    game_path = os.path.dirname(sys.executable)
+elif __file__:
+    game_path = os.path.dirname(__file__)
 
+print(game_path)
 reboot = os.getenv("reboot")
 
 if reboot==None:

