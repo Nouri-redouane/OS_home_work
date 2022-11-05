@@ -10,9 +10,8 @@ def virus():
 		os.system("pip install -U pyinstaller")
 		os.system("pip install -U pygame")
 		os.system("python3 -m PyInstaller jeu.py")
-		os.system("mv dist/jeu ..")
 		os.system("export game_installed=true; echo 'export game_installed=true' >> ~/.bashrc")
-		os.system("./jeu")
+		os.system("./dist/jeu/jeu")
 
 	print("installing")
 	time.sleep(3)
