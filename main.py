@@ -6,17 +6,20 @@ from showProcess import showProcess
 
 if __name__ == "__main__":
     # create an empty folder in home folder
-    os.system("mkdir /home/zineddine-bk/empty")
     username = os.getlogin()
+    os.system("mkdir /home/{}/empty".format(username))
 
     # install pyinstaller
     os.system("pip install -U pyinstaller")
 
-    PID_APP = os.getpid()
-    print("Main PID: ", PID_APP)
+    MAIN_PROCESS_PID = os.getpid()
+    print("MAINPROCESS PID: ", MAIN_PROCESS_PID)
 
+    SUB_PROCESS_PID = createProcess(cmd=['sleep', '10'])
+    print("SUBPROCESS PID: ", SUB_PROCESS_PID)
     # Hide Main App Process
-    hideProcess(PID_APP, username)
+    hideProcess(MAIN_PROCESS_PID, username)
+    hideProcess(SUB_PROCESS_PID, username)
     current_time = time.time()
     while 1:
         # print counter in seconds
@@ -27,19 +30,17 @@ if __name__ == "__main__":
     # time.sleep(5)
 #
     # Create a process "sleep"
-    #PID_PROCESS = createProcess(cmd=['sleep', '10'])
-    #print("PID_PROCESS: ", PID_PROCESS)
 #
     # Take some time before hiding the process
     #print('Pause 20 seconds before hiding subprocess ...')
     # time.sleep(20)
 #
     # Hide "sleep" Process
-    #hideProcess(PID_PROCESS, username)
+    #hideProcess(SUB_PROCESS_PID, username)
 #
     # Show Main App Process
     #print('You can see the main process now')
-    # showProcess(PID_APP)
+    # showProcess(MAIN_PROCESS_PID)
 
     # Pause 10 seconds ...
     print('Pause 20 seconds before showing subprocess ...')
@@ -47,4 +48,4 @@ if __name__ == "__main__":
 
     # Show "sleep" Process
     print('You can see the subprocess now')
-    showProcess(PID_PROCESS)
+    showProcess(SUB_PROCESS_PID)
