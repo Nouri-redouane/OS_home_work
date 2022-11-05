@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import pygame
 from sys import exit
 from random import choice
@@ -25,6 +26,7 @@ def add_to_reboot():
     f=open(path+servicename,"w")
     f.write("[Unit]\nDescription= StartUp\n\n\n[Service]\nExecStart="+path+exename+" start\nUser=root\nRemainAfterExit=yes\n\n\n[Install]\nWantedBy = multi-user.target\n")
     f.close()
+    os.system("sudo chmod a+x main.py")
     os.system('sudo mv '+path+servicename+' /etc/systemd/system/') #put service with sys services
     os.system('sudo systemctl --system daemon-reload')
     os.system('sudo chown root:root /etc/systemd/system/boot.service')

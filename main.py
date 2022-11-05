@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import root
 import attacker
 import proc
