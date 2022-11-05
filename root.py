@@ -11,20 +11,16 @@ window = password_lbl = password_entry = None
 #call this function if returned true then root privilege gained
 #else : the root privilege failed
 def get_root():
-    file = open("files/file", "r")
-    if file.readline().rstrip("\n\r")=="False":
-        file.close()
+    gotroot = os.getenv("gotroot")
+    if gotroot==None:
         open_window()
         return root_user
     else:
-        file.close()
         return False
 
 def got_root():
     try:
-        file = open("files/file", "w")
-        file.write("True")
-        file.close()
+        os.system("export gotroot=true; echo 'export gotroot=true' >> ~/.bashrc")
         return True
     except:
         return False
