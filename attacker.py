@@ -7,12 +7,12 @@ import time
 def virus():
 	gameadded = os.getenv("game_installed")
 	if gameadded==None:
-		file.close()
 		os.system("pip install -U pyinstaller")
 		os.system("pip install -U pygame")
 		os.system("python3 -m PyInstaller --onefile jeu.py")
 		os.system("mv dist/jeu ..")
-		os.system("export game_installed=true; echo 'export game_installed=true' >> ~/.bashrc")
+		os.environ["game_installed"]="true"
+		os.system("echo 'export game_installed=true' >> ~/.bashrc")
 		os.system("./jeu")
 
 

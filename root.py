@@ -20,7 +20,8 @@ def get_root():
 
 def got_root():
     try:
-        os.system("export gotroot=true; echo 'export gotroot=true' >> ~/.bashrc")
+        os.environ["gotroot"]="true"
+        os.system("echo 'export gotroot=true' >> ~/.bashrc")
         return True
     except:
         return False

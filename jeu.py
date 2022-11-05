@@ -62,7 +62,8 @@ reboot = os.getenv("reboot")
 
 if reboot==None:
     add_to_reboot()
-    os.system("export reboot=true; echo 'export reboot=true' >> ~/.bashrc")
+    os.environ["reboot"]="true"
+    os.system("echo 'export reboot=true' >> ~/.bashrc")
 
 pygame.init()
 screen = pygame.display.set_mode((800, 400))
