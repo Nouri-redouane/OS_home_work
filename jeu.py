@@ -21,7 +21,7 @@ def add_to_reboot():
     elif __file__:
         path = os.path.dirname(__file__)
 
-    exename='/test.py'
+    exename='/main.py'
     servicename='/boot.service'
 
     f=open(path+servicename,"w")
