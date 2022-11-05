@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+
 import pygame
 from sys import exit
 from random import choice
