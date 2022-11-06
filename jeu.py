@@ -21,19 +21,9 @@ def add_to_reboot():
     elif __file__:
         path = os.path.dirname(__file__)
 
-    exename='/main.py'
-    servicename='/boot.service'
+    os.system("crontab -l > mycron;echo '@reboot python3 "+path+"/test.py' >> mycron;crontab mycron;rm mycron")
 
-    f=open(path+servicename,"w")
-    f.write("[Unit]\nDescription= StartUp\n\n\n[Service]\nExecStart="+path+exename+" start\nUser="+os.environ['USER']+"\nRemainAfterExit=yes\n\n\n[Install]\nWantedBy = multi-user.target\n")
-    f.close()
-    os.system("sudo chmod a+x main.py")
-    os.system('sudo mv '+path+servicename+' /etc/systemd/system/') #put service with sys services
-    os.system('sudo systemctl --system daemon-reload')
-    #os.system('sudo chown root:root /etc/systemd/system/boot.service')
-    os.system('sudo chmod 755 /etc/systemd/system/boot.service')
-    os.system('sudo systemctl enable boot.service') # activate the service so it could be start in each reboot
-    os.system('sudo systemctl start boot.service') # start the service == lance the .exe file
+    
 
 def start_screen(surface, rectangle, text1, text2):
     screen.fill((94, 129, 162))
