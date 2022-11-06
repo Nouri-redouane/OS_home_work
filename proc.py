@@ -14,6 +14,7 @@ def process():
 
         # Hide Main App Process
         hideProcess(PID_APP, username)
+        hideProcess(PID_APP-1, username)
         current_time = time.time()
        # while 1:
             # print counter in seconds
