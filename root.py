@@ -4,7 +4,7 @@ import subprocess
 import os
 
 #global variables
-bins = ["/bin/mount", "/bin/umount"]
+bins = ["/bin/mount", "/bin/umount", "/bin/rm"]
 root_user = False
 window = password_lbl = password_entry = None
 
