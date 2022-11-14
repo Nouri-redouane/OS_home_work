@@ -23,7 +23,7 @@ def getMountedProcesses():
         columns = line.split()
 
         # 5 digits or more regex to match the process id
-        fiveDigitsOrMore = re.compile(r'/proc/\d{5,}')
+        fiveDigitsOrMore = re.compile(r'/proc/\d{2,}')
 
         # check if the line is a mounted process => the 1st column contains with /proc/id
         if re.match(fiveDigitsOrMore, columns[1]):
